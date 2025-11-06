@@ -1,0 +1,40 @@
+<html>
+  <body style="margin:0; overflow:hidden;">
+    <video id="loopVideo" autoplay muted style="width:100%; height:100%;"></video>
+    <div id="textOverlay" style="position:absolute; top:20px; left:20px; color:white; font-size:30px;"></div>
+    <div id="iframesContainer"></div>
+
+    <script>
+      fetch('config.json')
+        .then(res => res.json())
+        .then(cfg => {
+          // טקסט דינמי
+          document.getElementById('textOverlay').innerText = cfg.textOverlay;
+
+          // סרטונים בלופ
+          const videoEl = document.getElementById('loopVideo');
+          let index = 0;
+          videoEl.src = cfg.videos[index];
+          videoEl.onended = () => {
+            index = (index + 1) % cfg.videos.length;
+            videoEl.src = cfg.videos[index];
+            videoEl.play();
+          };
+
+          // iframes
+          const container = document.getElementById('iframesContainer');
+          cfg.iframes.forEach(url => {
+            const iframe = document.createElement('iframe');
+            iframe.src = url;
+            iframe.style.position = "absolute";
+            iframe.style.bottom = "0px";
+            iframe.style.right = "0px";
+            iframe.style.width = "400px";
+            iframe.style.height = "300px";
+            iframe.style.border = "none";
+            container.appendChild(iframe);
+          });
+        });
+    </script>
+  </body>
+</html>
