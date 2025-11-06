@@ -1,11 +1,12 @@
 {
-  "name": "my-live-loop",
+  "name": "live-server",
   "version": "1.0.0",
-  "main": "server.js",
-  "scripts": {
-    "start": "node server.js"
-  },
+  "main": "index.js",
+  "type": "module",
   "dependencies": {
-    "puppeteer": "^21.0.0"
+    "express": "^4.18.2"
+  },
+  "scripts": {
+    "start": "node index.js"
   }
 }
